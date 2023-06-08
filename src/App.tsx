@@ -1,42 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { ArrowBackIos, ArrowForwardIos, Circle } from '@mui/icons-material';
 
 import Card from './components/Card';
 import Header from './components/Header';
 import Section from './components/Section';
 
-import SampleFoodImage from './assets/sample-food.jpg';
+type RecipeType = {
+  id: number;
+  title: string;
+  image: string;
+  readyInMinutes: number;
+};
 
-const slideData = [
-  {
-    name: 'New Fashion Apparel',
-    src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/225363/fashion.jpg',
-  },
-  {
-    name: 'In The Wilderness',
-    src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/225363/forest.jpg',
-  },
-  {
-    name: 'For Your Current Mood',
-    src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/225363/guitar.jpg',
-  },
-  {
-    name: 'Focus On The Writing',
-    src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/225363/typewriter.jpg',
-  },
-];
+const API_URL = process.env.REACT_APP_API_URL_LANDING_PAGE!;
+const API_HOST = process.env.REACT_APP_API_HOST!;
+const API_KEY = process.env.REACT_APP_API_KEY!;
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [popular, setPopular] = useState<RecipeType[]>([]);
+  const [random, setRandom] = useState<RecipeType[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const check = localStorage.getItem('recipes');
+
+      if (check) {
+        const data = JSON.parse(check);
+        setPopular(data.slice(0, 3));
+        setRandom(data.slice(3));
+      } else {
+        try {
+          const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+              'X-RapidAPI-Key': API_KEY,
+              'X-RapidAPI-Host': API_HOST,
+            },
+          });
+          const result = await response.json();
+          const data = result.recipes;
+
+          localStorage.setItem('recipes', JSON.stringify(data));
+
+          setPopular(data.slice(0, 3));
+          setRandom(data.slice(3));
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slideData.length - 1 : currentIndex - 1;
+    const newIndex = isFirstSlide ? random.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
 
   const nextSlide = () => {
-    const isLastSlide = currentIndex === slideData.length - 1;
+    const isLastSlide = currentIndex === random.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
@@ -50,38 +76,50 @@ function App() {
       <header>
         <Header />
       </header>
-      <Section customStyle='bg-cover bg-landing-image'>
-        <h1 className='relative z-1 text-6xl font-semibold'>
-          FIND YOUR <p className='text-8xl font-semibold'>RECIPE</p>
+      <Section customStyle='bg-cover bg-landing-image h-full'>
+        <h1 className='relative z-1 text-5xl sm:text-6xl font-semibold'>
+          FIND YOUR <p className='text-7xl sm:text-8xl font-semibold'>RECIPE</p>
         </h1>
-        <p className='w-1/2'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          varius enim in eros elementum tristique. Duis cursus, mi quis viverra
-          ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
-          Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc
-          ut sem vitae risus tristique posuere.
+        <p className='w-1/2 text-sm sm:text-base'>
+          Welcome to our recipe hub! Explore a diverse range of mouthwatering
+          recipes, from classics to innovative dishes. With easy-to-follow
+          instructions and stunning visuals, we'll inspire your culinary
+          creativity and leave you wanting more. Join us on this flavorful
+          journey and elevate your cooking skills today!
         </p>
       </Section>
-      <Section customStyle='p-10'>
-        <h2 className='text-lg font-semibold mb-5'>
+      <Section customStyle='p-10 md:h-full'>
+        <h2 className='text-md sm:text-lg font-semibold mb-5'>
           Want to learn cook but confused how to start?
           <br />
           Let's start cooking with popular recipes
         </h2>
-        <div className='flex flex-row justify-between items-center'>
-          <Card src={SampleFoodImage} title='Tofu poke' time={20} />
-          <Card src={SampleFoodImage} title='Tofu poke' time={20} />
-          <Card src={SampleFoodImage} title='Tofu poke' time={20} />
+        <div className='flex flex-col md:flex-row justify-between items-center w-[100%]'>
+          {popular.map((recipe) => (
+            <Card
+              src={recipe.image}
+              title={recipe.title}
+              time={recipe.readyInMinutes}
+            ></Card>
+          ))}
         </div>
       </Section>
-      <Section customStyle='p-16 relative group'>
-        <h3 className='text-lg font-semibold mb-5'>
+      <Section customStyle='p-14 h-full relative group'>
+        <h3 className='text-md sm:text-lg font-semibold mb-5'>
           Discover more dishes by exploring what's new
         </h3>
-        <div
-          style={{ backgroundImage: `url(${slideData[currentIndex].src})` }}
-          className='w-full h-full rounded-2xl bg-center bg-cover duration-500 max-h-[90%]'
-        ></div>
+        {random.length && (
+          <div
+            style={{ backgroundImage: `url(${random[currentIndex].image})` }}
+            className='flex items-center justify-center w-full lg:w-1/2 h-2/3 rounded-2xl bg-center bg-cover duration-500 max-h-[50%] md:max-h-[90%] cursor-pointer'
+          >
+            <div className='w-[100%] h-[100%] rounded-2xl bg-black/[.6] text-white opacity-0 hover:opacity-100 transition-opacity'>
+              <p className='w-[100%] h-[100%] flex justify-center items-center translate-y-3 transition-transform hover:translate-y-0 text-2xl font-bold'>
+                {random[currentIndex].title}
+              </p>
+            </div>
+          </div>
+        )}
         {/* left arrow */}
         <div className='absolute top-[50%] -translate-x-0 translate-y-[-50%] left-4 text-2xl rounded-full p-2  cursor-pointer'>
           <ArrowBackIos sx={{ width: 30, height: 30 }} onClick={prevSlide} />
@@ -91,7 +129,7 @@ function App() {
           <ArrowForwardIos sx={{ width: 30, height: 30 }} onClick={nextSlide} />
         </div>
         <div className='flex top-4 justify-center py-2'>
-          {slideData.map((slide, index) => (
+          {random.map((slide, index) => (
             <div
               key={index}
               onClick={() => goToSlide(index)}
@@ -166,8 +204,8 @@ function App() {
           </div>
         </form>
       </div> */}
-      <Section customStyle='p-10'>
-        <div className='flex flex-col justify-center items-center w-[70%]'>
+      <Section customStyle='p-10 md:h-full'>
+        <div className='flex flex-col justify-center items-center'>
           <h4 className='text-lg font-semibold mb-5'>
             Subscribe to get weekly recipe updates
           </h4>
