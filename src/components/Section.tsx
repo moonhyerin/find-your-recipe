@@ -7,8 +7,8 @@ type PropsType = {
 
 function Section({ customStyle, children }: PropsType) {
   const customClass = customStyle
-    ? `flex flex-col justify-center items-center w-full h-full ${customStyle}`
-    : 'flex flex-col justify-center items-center w-full h-full';
+    ? `flex flex-col justify-center items-center w-full ${customStyle}`
+    : 'flex flex-col justify-center items-center w-full';
 
   return <div className={customClass}>{children}</div>;
 }
