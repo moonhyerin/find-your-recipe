@@ -3,8 +3,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import Logo from '../assets/chef.png';
 
+import Modal from './Modal';
+
 function Header() {
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [search, setSearch] = useState('');
+
+  const onSideMenuClick = () => {
+    setSideMenuOpen(!sideMenuOpen);
+  };
+
+  const handleModalOpen = (isOpen: boolean) => {
+    setSideMenuOpen(isOpen);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -27,9 +38,28 @@ function Header() {
           <div className='p-5 text-sm'>About</div>
         </div>
       </div>
-      <div className='block md:hidden'>
+      <div
+        className='flex flex-col items-end md:hidden cursor-pointer'
+        onClick={onSideMenuClick}
+      >
         <MenuIcon sx={{ width: 30, height: 30 }} />
       </div>
+      {sideMenuOpen && (
+        <Modal setIsOpen={handleModalOpen}>
+          <ul className='space-y-6 text-start'>
+            <li>
+              <a className='hover:text-[#ff512e]' href='/'>
+                Recipes
+              </a>
+            </li>
+            <li>
+              <a className='hover:text-[#ff512e]' href='/'>
+                About
+              </a>
+            </li>
+          </ul>
+        </Modal>
+      )}
       <div className='hidden md:block'>
         <input
           type='text'
