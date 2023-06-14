@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import Logo from '../assets/chef.png';
 
 import Modal from './Modal';
+import SearchBar from './SearchBar';
 
 function Header() {
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
@@ -33,9 +35,21 @@ function Header() {
       <div className='flex flex-row justify-center items-center'>
         <img className='w-9 h-9' alt='' src={Logo}></img>
         <div className='md:flex md:flex-row md:items-center hidden'>
-          <div className='p-5 text-sm'>Home</div>
-          <div className='p-5 text-sm'>Recipe</div>
-          <div className='p-5 text-sm'>About</div>
+          <div className='p-5 text-sm'>
+            <Link className='hover:text-[#ff512e]' to='/'>
+              Home
+            </Link>
+          </div>
+          <div className='p-5 text-sm'>
+            <Link className='hover:text-[#ff512e]' to='/recipes'>
+              Recipes
+            </Link>
+          </div>
+          <div className='p-5 text-sm'>
+            <Link className='hover:text-[#ff512e]' to='/about'>
+              About
+            </Link>
+          </div>
         </div>
       </div>
       <div
@@ -48,23 +62,27 @@ function Header() {
         <Modal setIsOpen={handleModalOpen}>
           <ul className='space-y-6 text-start'>
             <li>
-              <a className='hover:text-[#ff512e]' href='/'>
-                Recipes
-              </a>
+              <Link className='hover:text-[#ff512e]' to='/'>
+                Home
+              </Link>
             </li>
             <li>
-              <a className='hover:text-[#ff512e]' href='/'>
+              <Link className='hover:text-[#ff512e]' to='/recipes'>
+                Recipes
+              </Link>
+            </li>
+            <li>
+              <Link className='hover:text-[#ff512e]' to='/about'>
                 About
-              </a>
+              </Link>
             </li>
           </ul>
         </Modal>
       )}
       <div className='hidden md:block'>
-        <input
-          type='text'
+        <SearchBar
           placeholder='Wanna cook something?'
-          className='p-2 w-[200px] text-sm shadow-md rounded-md border-solid'
+          customStyle='w-[200px]'
           value={search}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
