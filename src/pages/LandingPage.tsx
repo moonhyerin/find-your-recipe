@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { ArrowBackIos, ArrowForwardIos, Circle } from '@mui/icons-material';
 
@@ -30,16 +31,21 @@ function LandingPage() {
         setPopular(data.slice(0, 3));
         setRandom(data.slice(3));
       } else {
+        const options = {
+          method: 'GET',
+          url: API_URL,
+          params: {
+            number: '7',
+          },
+          headers: {
+            'X-RapidAPI-Key': API_KEY,
+            'X-RapidAPI-Host': API_HOST,
+          },
+        };
+
         try {
-          const response = await fetch(API_URL, {
-            method: 'GET',
-            headers: {
-              'X-RapidAPI-Key': API_KEY,
-              'X-RapidAPI-Host': API_HOST,
-            },
-          });
-          const result = await response.json();
-          const data = result.recipes;
+          const response = await axios.request(options);
+          const data = response.data.recipes;
 
           localStorage.setItem('recipes', JSON.stringify(data));
 
