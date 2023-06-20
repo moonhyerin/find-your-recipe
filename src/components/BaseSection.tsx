@@ -5,7 +5,7 @@ type PropsType = {
   customStyle?: string;
 };
 
-function Section({ customStyle, children }: PropsType) {
+function BaseSection({ customStyle, children }: PropsType) {
   const customClass = customStyle
     ? `flex flex-col justify-center items-center w-full ${customStyle}`
     : 'flex flex-col justify-center items-center w-full';
@@ -13,4 +13,4 @@ function Section({ customStyle, children }: PropsType) {
   return <div className={customClass}>{children}</div>;
 }
 
-export default Section;
+export default BaseSection;
