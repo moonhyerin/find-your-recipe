@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
 type PropsType = {
-  message: string;
-  handleChecked?: (value: string) => void;
+  paramKey?: string;
+  value: string;
+  handleChecked?: (key: string, value: string) => void;
 };
 
-function Label({ message, handleChecked }: PropsType) {
+function Label({ paramKey, value, handleChecked }: PropsType) {
   const [checked, setChecked] = useState(false);
 
   const handleClick = () => {
     setChecked(!checked);
 
-    if (handleChecked) handleChecked(message);
+    if (paramKey && handleChecked) handleChecked(paramKey, value);
   };
 
   return (
@@ -21,7 +22,7 @@ function Label({ message, handleChecked }: PropsType) {
       }`}
       onClick={handleClick}
     >
-      {message}
+      {value}
     </div>
   );
 }
