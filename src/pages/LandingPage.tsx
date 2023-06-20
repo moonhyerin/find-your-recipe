@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { ArrowBackIos, ArrowForwardIos, Circle } from '@mui/icons-material';
 
-import Section from '../components/Section';
+import Section from '../components/BaseSection';
 import Card from '../components/Card';
 
 type RecipeType = {

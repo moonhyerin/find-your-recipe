@@ -1,5 +1,7 @@
 import LandingPage from './LandingPage';
-import RecipePage from './RecipePage';
+import RecipesPage from './RecipesPage';
 import AboutPage from './AboutPage';
+import DetailPage from './DetailPage';
+import SearchPage from './SearchPage';
 
-export { LandingPage, RecipePage, AboutPage };
+export { LandingPage, RecipesPage, AboutPage, DetailPage, SearchPage };
