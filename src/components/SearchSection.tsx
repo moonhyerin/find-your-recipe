@@ -4,11 +4,11 @@ import axios from 'axios';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 
-import BaseSection from '../components/BaseSection';
-import SearchBar from '../components/SearchBar';
-import Label from '../components/Label';
+import SearchBar from './SearchBar';
+import Label from './Label';
 
 import { CategoryType, ResultType } from '../types';
+import { API_HOST, API_KEY } from '../constant';
 
 const category: CategoryType = {
   cuisine: [
@@ -74,7 +74,7 @@ const category: CategoryType = {
   ],
 };
 
-function SearchPage() {
+function SearchSection() {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [options, setOptions] = useState<CategoryType>({});
@@ -109,9 +109,8 @@ function SearchPage() {
         ...optionsToApiParams,
       },
       headers: {
-        'X-RapidAPI-Key': '4d07f0b722msh46c43b1c5cb02cfp19e428jsn4430ada357ab',
-        'X-RapidAPI-Host':
-          'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
+        'X-RapidAPI-Key': API_KEY,
+        'X-RapidAPI-Host': API_HOST,
       },
     };
 
@@ -159,20 +158,12 @@ function SearchPage() {
 
   const renderCategory = () => {
     return (
-      <div className='text-left p-5'>
-        <div
-          className='font-bold text-base cursor-pointer'
-          onClick={handleOpen}
-        >
+      <div>
+        <div className=' text-base cursor-pointer' onClick={handleOpen}>
           More options
           <ExpandMoreIcon sx={{ width: 15, height: 15 }} />
         </div>
-        <Collapse
-          in={open}
-          timeout={500}
-          component='div'
-          className='w-full py-2'
-        >
+        <Collapse in={open} timeout={500} component='div' className='py-2'>
           {Object.keys(category).map((key, i) => (
             <div
               key={key}
@@ -184,7 +175,9 @@ function SearchPage() {
                   <Label
                     key={value}
                     paramKey={key}
+                    clickable
                     value={value}
+                    customStyle='mr-2 my-1 py-2 px-2'
                     handleChecked={handleSetOptions}
                   />
                 ))}
@@ -197,18 +190,16 @@ function SearchPage() {
   };
 
   return (
-    <BaseSection customStyle='!justify-start'>
-      <>
-        <SearchBar
-          customStyle='w-2/3 my-2'
-          value={search}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        />
-        {renderCategory()}
-      </>
-    </BaseSection>
+    <>
+      <SearchBar
+        customStyle='w-full my-2'
+        value={search}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+      />
+      {renderCategory()}
+    </>
   );
 }
 
-export default SearchPage;
+export default SearchSection;
