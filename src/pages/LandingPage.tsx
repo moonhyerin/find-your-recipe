@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { ArrowBackIos, ArrowForwardIos, Circle } from '@mui/icons-material';
-
 import Section from '../components/BaseSection';
 import Card from '../components/Card';
+
+import { API_URL, API_HOST, API_KEY } from '../constant';
 
 type RecipeType = {
   id: number;
@@ -12,10 +13,6 @@ type RecipeType = {
   image: string;
   readyInMinutes: number;
 };
-
-const API_URL = process.env.REACT_APP_API_URL_LANDING_PAGE!;
-const API_HOST = process.env.REACT_APP_API_HOST!;
-const API_KEY = process.env.REACT_APP_API_KEY!;
 
 function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -103,7 +100,7 @@ function LandingPage() {
               src={recipe.image}
               title={recipe.title}
               time={recipe.readyInMinutes}
-            ></Card>
+            />
           ))}
         </div>
       </Section>
