@@ -13,8 +13,8 @@ function SearchBar(props: PropsType) {
   const { placeholder, customStyle, value, onChange, onKeyDown } = props;
 
   const style = customStyle
-    ? `flex flex-row p-3 text-sm rounded-full bg-slate-400/10 hover:bg-slate-400/20 ${customStyle}`
-    : `flex flex-row p-3 text-sm rounded-full bg-slate-400/10 hover:bg-slate-400/20`;
+    ? `flex flex-row p-3 text-sm rounded-lg bg-slate-400/10 hover:bg-slate-400/20 ${customStyle}`
+    : `flex flex-row p-3 text-sm rounded-lg bg-slate-400/10 hover:bg-slate-400/20`;
 
   return (
     <div className={style}>

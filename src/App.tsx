@@ -2,13 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header';
-import {
-  LandingPage,
-  AboutPage,
-  DetailPage,
-  RecipesPage,
-  SearchPage,
-} from './pages';
+import { LandingPage, AboutPage, DetailPage, RecipesPage } from './pages';
 
 function App() {
   return (
@@ -22,7 +16,6 @@ function App() {
           <Route path='/' element={<LandingPage />} />
           <Route path='/recipes' element={<RecipesPage />} />
           <Route path='/recipes/*' element={<DetailPage />} />
-          <Route path='/search' element={<SearchPage />} />
           <Route path='/about' element={<AboutPage />} />
         </Routes>
         <footer>

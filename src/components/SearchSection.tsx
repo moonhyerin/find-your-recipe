@@ -156,9 +156,9 @@ function SearchSection() {
     }));
   };
 
-  const renderCategory = () => {
+  const renderMoreOptions = () => {
     return (
-      <div>
+      <div className=' text-right'>
         <div className=' text-base cursor-pointer' onClick={handleOpen}>
           More options
           <ExpandMoreIcon sx={{ width: 15, height: 15 }} />
@@ -177,7 +177,7 @@ function SearchSection() {
                     paramKey={key}
                     clickable
                     value={value}
-                    customStyle='mr-2 my-1 py-2 px-2'
+                    customStyle='ml-2 my-1 py-2 px-2'
                     handleChecked={handleSetOptions}
                   />
                 ))}
@@ -191,13 +191,20 @@ function SearchSection() {
 
   return (
     <>
-      <SearchBar
-        customStyle='w-full my-2'
-        value={search}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
-      {renderCategory()}
+      <div className='flex flex-row justify-between w-full py-2'>
+        <SearchBar
+          customStyle='w-full mr-3'
+          value={search}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+        <input
+          type='button'
+          value='Search'
+          className='text-base bg-[#ff512e] rounded-lg px-5 text-white font-normal'
+        />
+      </div>
+      {renderMoreOptions()}
     </>
   );
 }
