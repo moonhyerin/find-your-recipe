@@ -15,7 +15,7 @@ type AnalyzedInstructionType = {
   steps: [];
 };
 
-type RandomRecipeType = {
+type RecipeType = {
   aggregateLikes: number;
   analyzedInstructions: AnalyzedInstructionType[];
   cheap: boolean;
@@ -54,4 +54,4 @@ type RandomRecipeType = {
   weightWatcherSmartPoints: number;
 };
 
-export type { CategoryType, ResultType, RandomRecipeType };
+export type { CategoryType, ResultType, RecipeType };

@@ -9,15 +9,16 @@ import Label from '../components/Label';
 
 import Clock from '../assets/clock.png';
 
-import { API_URL_SEARCH, API_HOST, API_KEY } from '../constant';
-import { CategoryType, RandomRecipeType, ResultType } from '../types';
+import { API_URL, API_HOST, API_KEY } from '../constant';
+import { CategoryType, RecipeType, ResultType } from '../types';
 
 function RecipesPage() {
-  const [randomRecipes, setRandomRecipes] = useState<RandomRecipeType[]>([]);
+  const [randomRecipes, setRandomRecipes] = useState<RecipeType[]>([]);
   const [searchResult, setSearchResult] = useState<ResultType[]>([]);
 
   useEffect(() => {
     async function fetchData() {
+      // FIX ME: WRITE FOR TESTING !!!
       const check = localStorage.getItem('randomRecipes');
 
       if (check) {
@@ -26,7 +27,7 @@ function RecipesPage() {
       } else {
         const options = {
           method: 'GET',
-          url: API_URL_SEARCH,
+          url: `${API_URL}/random`,
           params: {
             number: '30',
           },
@@ -54,10 +55,10 @@ function RecipesPage() {
 
   const navigate = useNavigate();
 
-  const handleRecipeClick = (recipe: RandomRecipeType | ResultType) => {
+  const handleRecipeClick = (recipe: RecipeType | ResultType) => {
     console.log(recipe);
 
-    navigate(`/recipe/${recipe.title}`);
+    navigate(`/recipes/${recipe.title}`);
   };
 
   const renderRandomRecipes = () => {
@@ -105,7 +106,7 @@ function RecipesPage() {
 
     const apiOptions = {
       method: 'GET',
-      url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
+      url: `${API_URL}/complexSearch`,
       params: {
         query: search,
         ...optionsToApiParams,
@@ -116,31 +117,9 @@ function RecipesPage() {
       },
     };
 
-    // FIX ME: WRITE FOR TESTING !!!
-    // const prevResult = localStorage.getItem('searchResult');
-    // if (!prevResult) {
-    //   try {
-    //     const response = await axios.request(apiOptions);
-    //     console.log(response.data);
-    //     setSearchResult(response.data.results);
-    //     localStorage.setItem(
-    //       'searchResult',
-    //       JSON.stringify(response.data.results)
-    //     );
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // } else {
-    //   setSearchResult(JSON.parse(prevResult));
-    // }
     try {
       const response = await axios.request(apiOptions);
-      console.log(response.data);
       setSearchResult(response.data.results);
-      // localStorage.setItem(
-      //   'searchResult',
-      //   JSON.stringify(response.data.results)
-      // );
     } catch (error) {
       console.error(error);
     }

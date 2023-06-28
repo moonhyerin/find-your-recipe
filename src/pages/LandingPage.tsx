@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { ArrowBackIos, ArrowForwardIos, Circle } from '@mui/icons-material';
 import Section from '../components/BaseSection';
 import Card from '../components/Card';
 
-import { API_URL_GET_RANDOM, API_HOST, API_KEY } from '../constant';
-
-type RecipeType = {
-  id: number;
-  title: string;
-  image: string;
-  readyInMinutes: number;
-};
+import { API_URL, API_HOST, API_KEY } from '../constant';
+import { RecipeType } from '../types';
 
 function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [popular, setPopular] = useState<RecipeType[]>([]);
   const [random, setRandom] = useState<RecipeType[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -30,7 +26,7 @@ function LandingPage() {
       } else {
         const options = {
           method: 'GET',
-          url: API_URL_GET_RANDOM,
+          url: `${API_URL}/random`,
           params: {
             number: '7',
           },
@@ -73,6 +69,12 @@ function LandingPage() {
     setCurrentIndex(slideIndex);
   };
 
+  const showDetailPage = (recipeId: number) => {
+    console.log(recipeId);
+
+    navigate(`/recipes/${recipeId}`);
+  };
+
   return (
     <>
       <Section customStyle='bg-cover bg-landing-image h-full'>
@@ -88,7 +90,7 @@ function LandingPage() {
         </p>
       </Section>
       <Section customStyle='p-10 md:h-full'>
-        <h2 className='text-md sm:text-lg font-semibold mb-5'>
+        <h2 className='text-md md:text-xl font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
           Want to learn cook but confused how to start?
           <br />
           Let's start cooking with popular recipes
@@ -96,16 +98,15 @@ function LandingPage() {
         <div className='flex flex-col md:flex-row justify-between items-center w-[100%]'>
           {popular.map((recipe) => (
             <Card
-              key={recipe.title}
-              src={recipe.image}
-              title={recipe.title}
-              time={recipe.readyInMinutes}
+              key={recipe.id}
+              recipe={recipe}
+              handleClick={showDetailPage}
             />
           ))}
         </div>
       </Section>
       <Section customStyle='p-14 h-full relative group'>
-        <h3 className='text-md sm:text-lg font-semibold mb-5'>
+        <h3 className='text-md md:text-xl font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
           Discover more dishes by exploring what's new
         </h3>
         {random.length && (
@@ -204,7 +205,7 @@ function LandingPage() {
   </div> */}
       <Section customStyle='p-10 md:h-full'>
         <div className='flex flex-col justify-center items-center'>
-          <h4 className='text-lg font-semibold mb-5'>
+          <h4 className='text-md md:text-xl font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
             Subscribe to get weekly recipe updates
           </h4>
           <div className='mb-5'>
@@ -217,7 +218,7 @@ function LandingPage() {
               Contact
             </button>
           </div>
-          <p>
+          <p className='text-sm md:text-base'>
             We won't send you spam.
             <br />
             Unsubscribe at any time.
