@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
@@ -7,8 +6,11 @@ import Collapse from '@mui/material/Collapse';
 import SearchBar from './SearchBar';
 import Label from './Label';
 
-import { CategoryType, ResultType } from '../types';
-import { API_HOST, API_KEY } from '../constant';
+import { CategoryType } from '../types';
+
+type PropsType = {
+  handleSearch: (search: string, options: CategoryType) => void;
+};
 
 const category: CategoryType = {
   cuisine: [
@@ -74,11 +76,10 @@ const category: CategoryType = {
   ],
 };
 
-function SearchSection() {
+function SearchSection({ handleSearch }: PropsType) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [options, setOptions] = useState<CategoryType>({});
-  const [searchResult, setSearchResult] = useState<ResultType[]>([]);
 
   const handleOpen = () => {
     setOpen(!open);
@@ -90,47 +91,12 @@ function SearchSection() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      // Search recipes with 'search' value -> move to search result page
-      searchRecipe();
+      handleSearch(search, options);
     }
   };
 
-  const searchRecipe = async () => {
-    const optionsToApiParams = Object.keys(options).reduce((acc, key) => {
-      return { ...acc, [key]: options[key].join(',') };
-    }, {});
-
-    const apiOptions = {
-      method: 'GET',
-      url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
-      params: {
-        query: search,
-        number: '10',
-        ...optionsToApiParams,
-      },
-      headers: {
-        'X-RapidAPI-Key': API_KEY,
-        'X-RapidAPI-Host': API_HOST,
-      },
-    };
-
-    // FIX ME: WRITE FOR TESTING !!!
-    const prevResult = localStorage.getItem('searchResult');
-    if (!prevResult) {
-      try {
-        const response = await axios.request(apiOptions);
-        console.log(response.data);
-        setSearchResult(response.data.results);
-        localStorage.setItem(
-          'searchResult',
-          JSON.stringify(response.data.results)
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      setSearchResult(JSON.parse(prevResult));
-    }
+  const handleClick = () => {
+    handleSearch(search, options);
   };
 
   const handleSetOptions = (paramKey: string, paramValue: string) => {
@@ -202,6 +168,7 @@ function SearchSection() {
           type='button'
           value='Search'
           className='text-base bg-[#ff512e] rounded-lg px-5 text-white font-normal'
+          onClick={handleClick}
         />
       </div>
       {renderMoreOptions()}

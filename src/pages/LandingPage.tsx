@@ -5,7 +5,7 @@ import { ArrowBackIos, ArrowForwardIos, Circle } from '@mui/icons-material';
 import Section from '../components/BaseSection';
 import Card from '../components/Card';
 
-import { API_URL, API_HOST, API_KEY } from '../constant';
+import { API_URL_GET_RANDOM, API_HOST, API_KEY } from '../constant';
 
 type RecipeType = {
   id: number;
@@ -30,7 +30,7 @@ function LandingPage() {
       } else {
         const options = {
           method: 'GET',
-          url: API_URL,
+          url: API_URL_GET_RANDOM,
           params: {
             number: '7',
           },
