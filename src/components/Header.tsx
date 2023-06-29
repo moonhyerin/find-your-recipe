@@ -31,25 +31,34 @@ function Header() {
   };
 
   return (
-    <div className='flex flex-row justify-between items-center p-4 md:px-4 md:py-0'>
+    <div className='flex flex-row justify-between items-center p-5 md:px-8 md:py-2'>
       <div className='flex flex-row justify-center items-center'>
-        <img className='w-9 h-9' alt='' src={Logo}></img>
-        <div className='md:flex md:flex-row md:items-center hidden'>
-          <div className='p-5 text-sm'>
-            <Link className='hover:text-[#ff512e]' to='/'>
-              Home
-            </Link>
-          </div>
-          <div className='p-5 text-sm'>
-            <Link className='hover:text-[#ff512e]' to='/recipes'>
-              Recipes
-            </Link>
-          </div>
-          <div className='p-5 text-sm'>
-            <Link className='hover:text-[#ff512e]' to='/about'>
-              About
-            </Link>
-          </div>
+        <img className='w-9 h-9 mr-5' alt='' src={Logo}></img>
+        <div className='block'>
+          <SearchBar
+            placeholder='Search recipes'
+            customStyle='w-full md:w-[200px]'
+            value={search}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+      </div>
+      <div className='md:flex md:flex-row md:items-center hidden text-base font-inter font-medium tracking-[1.2] text-right text-[#5c5c5c]'>
+        <div className='py-5 pl-5'>
+          <Link className='hover:text-[#ff512e]' to='/'>
+            Home
+          </Link>
+        </div>
+        <div className='py-5 pl-5'>
+          <Link className='hover:text-[#ff512e]' to='/recipes'>
+            Recipes
+          </Link>
+        </div>
+        <div className='py-5 pl-5'>
+          <Link className='hover:text-[#ff512e]' to='/about'>
+            About
+          </Link>
         </div>
       </div>
       <div
@@ -60,7 +69,7 @@ function Header() {
       </div>
       {sideMenuOpen && (
         <Modal setIsOpen={handleModalOpen}>
-          <ul className='space-y-6 text-start'>
+          <ul className='space-y-6 text-start text-base font-inter font-medium tracking-[1.2] text-[#5c5c5c]'>
             <li>
               <Link className='hover:text-[#ff512e]' to='/'>
                 Home
@@ -79,15 +88,6 @@ function Header() {
           </ul>
         </Modal>
       )}
-      <div className='hidden md:block'>
-        <SearchBar
-          placeholder='Wanna cook something?'
-          customStyle='w-[200px]'
-          value={search}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        />
-      </div>
     </div>
   );
 }
