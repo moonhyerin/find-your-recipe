@@ -30,7 +30,7 @@ function Label({
 
   return (
     <div
-      className={`text-xs inline-block rounded-full ${style} ${
+      className={`font-inter text-xs font-medium uppercase tracking-widest inline-block rounded-full py-[10px] px-[20px] ${style} ${
         checked && '!bg-[#ff512e] !text-white'
       }`}
       onClick={handleClick}

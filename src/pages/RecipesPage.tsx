@@ -58,7 +58,7 @@ function RecipesPage() {
   const handleRecipeClick = (recipe: RecipeType | ResultType) => {
     console.log(recipe);
 
-    navigate(`/recipes/${recipe.title}`);
+    navigate(`/recipes/${recipe.id}`);
   };
 
   const renderRandomRecipes = () => {

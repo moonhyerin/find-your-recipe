@@ -78,10 +78,10 @@ function LandingPage() {
   return (
     <>
       <Section customStyle='bg-cover bg-landing-image h-full'>
-        <h1 className='relative z-1 text-5xl sm:text-6xl font-semibold'>
-          FIND YOUR <p className='text-7xl sm:text-8xl font-semibold'>RECIPE</p>
+        <h1 className='relative z-1 text-5xl sm:text-6xl font-semibold font-lora pb-5'>
+          Find Your<p className='text-7xl sm:text-8xl'>Recipe</p>
         </h1>
-        <p className='w-1/2 text-sm sm:text-base'>
+        <p className='w-1/2 text-base font-inter font-medium tracking-[1.2] text-[#5c5c5c]'>
           Welcome to our recipe hub! Explore a diverse range of mouthwatering
           recipes, from classics to innovative dishes. With easy-to-follow
           instructions and stunning visuals, we'll inspire your culinary
@@ -90,7 +90,7 @@ function LandingPage() {
         </p>
       </Section>
       <Section customStyle='p-10 md:h-full'>
-        <h2 className='text-md md:text-xl font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
+        <h2 className='text-lg md:text-xl font-lora font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
           Want to learn cook but confused how to start?
           <br />
           Let's start cooking with popular recipes
@@ -106,7 +106,7 @@ function LandingPage() {
         </div>
       </Section>
       <Section customStyle='p-14 h-full relative group'>
-        <h3 className='text-md md:text-xl font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
+        <h3 className='text-lg md:text-xl font-lora font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
           Discover more dishes by exploring what's new
         </h3>
         {random.length && (
@@ -205,10 +205,10 @@ function LandingPage() {
   </div> */}
       <Section customStyle='p-10 md:h-full'>
         <div className='flex flex-col justify-center items-center'>
-          <h4 className='text-md md:text-xl font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
+          <h4 className='text-lg md:text-xl font-lora font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
             Subscribe to get weekly recipe updates
           </h4>
-          <div className='mb-5'>
+          <div className='mb-5 font-inter font-medium tracking-[1.2] text-[#5c5c5c]'>
             <input
               className='appearance-none border-2 border-r-0 border-gray-200 rounded-l-md py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black'
               type='email'
@@ -218,7 +218,7 @@ function LandingPage() {
               Contact
             </button>
           </div>
-          <p className='text-sm md:text-base'>
+          <p className='text-base font-inter font-medium tracking-[1.2] text-[#5c5c5c]'>
             We won't send you spam.
             <br />
             Unsubscribe at any time.
