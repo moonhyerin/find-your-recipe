@@ -33,7 +33,9 @@ function Header() {
   return (
     <div className='flex flex-row justify-between items-center p-5 md:px-8 md:py-2'>
       <div className='flex flex-row justify-center items-center'>
-        <img className='w-9 h-9 mr-5' alt='' src={Logo}></img>
+        <Link to='/'>
+          <img className='w-9 h-9 mr-5' alt='' src={Logo}></img>
+        </Link>
         <div className='block'>
           <SearchBar
             placeholder='Search recipes'

@@ -32,6 +32,7 @@ type RecipeType = {
   id: number;
   image: string;
   imageType: string;
+  nutrition: Object;
   instructions: string;
   license: string;
   lowFodmap: boolean;

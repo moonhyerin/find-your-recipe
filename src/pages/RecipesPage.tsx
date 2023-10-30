@@ -14,12 +14,12 @@ import { CategoryType, RecipeType, ResultType } from '../types';
 
 function RecipesPage() {
   const [randomRecipes, setRandomRecipes] = useState<RecipeType[]>([]);
-  const [searchResult, setSearchResult] = useState<ResultType[]>([]);
+  const [searchResult, setSearchResult] = useState<RecipeType[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       // FIX ME: WRITE FOR TESTING !!!
-      const check = localStorage.getItem('randomRecipes');
+      const check = await localStorage.getItem('randomRecipes');
 
       if (check) {
         const data = JSON.parse(check);
@@ -61,24 +61,32 @@ function RecipesPage() {
     navigate(`/recipes/${recipe.id}`);
   };
 
-  const renderRandomRecipes = () => {
-    return randomRecipes.map((recipe) => (
+  const renderRecipes = (recipes: RecipeType[]) => {
+    return recipes.map((recipe, i) => (
       <div
-        key={recipe.title}
-        className='p-3 my-2 sm:w-[49%] md:w-[32%] lg:w-[24%] xl:w-[19%] bg-white border-2 hover:border-b-4 hover:border-b-[#ff512e] cursor-pointer'
+        key={`${recipe.title}_${i}`}
+        className='p-3 my-2 sm:w-[49%] md:w-[32%] lg:w-[24%] xl:w-[19%] bg-white border-2 hover:border-[#ff512e] cursor-pointer'
         onClick={() => handleRecipeClick(recipe)}
       >
         <img alt='' src={recipe.image} />
         <div className='my-2'>
-          {recipe.dishTypes.map(
-            (dishType, i) =>
-              i < 3 && (
-                <Label
-                  key={dishType}
-                  value={dishType}
-                  customStyle='m-1 p-1 !rounded-md'
-                />
-              )
+          {recipe.dishTypes.length ? (
+            recipe.dishTypes.map(
+              (dishType, i) =>
+                i < 3 && (
+                  <Label
+                    key={dishType}
+                    value={dishType}
+                    customStyle='py-[5px] px-[5px] m-1 !rounded-xl !bg-[#ffe5b4] text-black !text-[10px]'
+                  />
+                )
+            )
+          ) : (
+            <Label
+              key={'no_value'}
+              value={'Any'}
+              customStyle='py-[5px] px-[5px] m-1 !rounded-xl !bg-[#ffe5b4] text-black !text-[10px]'
+            />
           )}
           {recipe.dishTypes.length > 3 && (
             <Tooltip title={recipe.dishTypes.join(',')} placement='bottom'>
@@ -109,6 +117,7 @@ function RecipesPage() {
       url: `${API_URL}/complexSearch`,
       params: {
         query: search,
+        addRecipeInformation: true,
         ...optionsToApiParams,
       },
       headers: {
@@ -119,39 +128,30 @@ function RecipesPage() {
 
     try {
       const response = await axios.request(apiOptions);
+      console.log(response.data.results);
       setSearchResult(response.data.results);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const renderSearchResult = () => {
-    return searchResult.map((recipe) => (
-      <div
-        key={recipe.title}
-        className='p-3 my-2 sm:w-[49%] md:w-[32%] lg:w-[24%] xl:w-[19%] bg-white border-2 hover:border-b-4 hover:border-b-[#ff512e] cursor-pointer'
-        onClick={() => handleRecipeClick(recipe)}
-      >
-        <img alt='' src={recipe.image} />
-        <div className='py-2 flex flex-col items-center w-[100%]'>
-          <p className='mb-2 text-base font-medium leading-tight text-neutral-800 dark:text-neutral-50 w-[100%]'>
-            {recipe.title}
-          </p>
-        </div>
-      </div>
-    ));
-  };
-
   return (
     <BaseSection customStyle='px-10'>
       <SearchSection handleSearch={searchRecipes} />
-      {searchResult ? (
+      {searchResult.length ? (
         <div className='w-full flex justify-between flex-row flex-wrap'>
-          {renderSearchResult()}
+          {renderRecipes(searchResult)}
         </div>
       ) : (
-        <div className='w-full flex justify-between flex-row flex-wrap'>
-          {renderRandomRecipes()}
+        <div className='w-full flex justify-between flex-col flex-wrap'>
+          <div>
+            <h2 className='text-lg md:text-xl font-lora font-semibold mb-5 underline decoration-2 decoration-[#ff512e]'>
+              What do you want to cook today? Get Inspired!
+            </h2>
+          </div>
+          <div className='flex justify-between flex-row flex-wrap'>
+            {renderRecipes(randomRecipes)}
+          </div>
         </div>
       )}
     </BaseSection>
