@@ -53,6 +53,56 @@ type RecipeType = {
   veryHealthy: boolean;
   veryPopular: boolean;
   weightWatcherSmartPoints: number;
+  winePairing: WinePairingType;
 };
 
-export type { CategoryType, ResultType, RecipeType };
+type WinePairingType = {
+  pairedWines: string[];
+  pairingText: string;
+  productMatches: WineProductType;
+};
+
+type WineProductType = {
+  averageRating: number;
+  description: string;
+  id: number;
+  imageUrl: string;
+  link: string;
+  price: string;
+  ratingCount: number;
+  score: number;
+  title: string;
+};
+
+type IngredientType = {
+  name: string;
+  image: string;
+  amount: {
+    metric: { unit: string; value: number };
+    us: { unit: string; value: number };
+  };
+};
+
+type NutritionType = {
+  calories: string;
+  carbs: string;
+  fat: string;
+  protein: string;
+  good: NutritionDetailType[];
+  bad: NutritionDetailType[];
+};
+
+type NutritionDetailType = {
+  amount: string;
+  indented: boolean;
+  title: string;
+  percentOfDailyNeeds: number;
+};
+
+export type {
+  CategoryType,
+  ResultType,
+  RecipeType,
+  IngredientType,
+  NutritionType,
+};
