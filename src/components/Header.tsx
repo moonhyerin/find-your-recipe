@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-
 import Logo from '../assets/chef.png';
+import User from '../assets/user.png';
 
 import Modal from './Modal';
 import SearchBar from './SearchBar';
@@ -62,6 +62,11 @@ function Header() {
             About
           </Link>
         </div>
+        <div className='py-5 pl-5'>
+          <Link className='hover:text-[#ff512e]' to='/user'>
+            <img className='w-8 h-8' alt='' src={User} />
+          </Link>
+        </div>
       </div>
       <div
         className='flex flex-col items-end md:hidden cursor-pointer'
@@ -85,6 +90,11 @@ function Header() {
             <li>
               <Link className='hover:text-[#ff512e]' to='/about'>
                 About
+              </Link>
+            </li>
+            <li>
+              <Link className='hover:text-[#ff512e]' to='/user'>
+                My Page
               </Link>
             </li>
           </ul>

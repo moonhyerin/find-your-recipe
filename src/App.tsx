@@ -2,7 +2,13 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header';
-import { LandingPage, AboutPage, DetailPage, RecipesPage } from './pages';
+import {
+  LandingPage,
+  AboutPage,
+  DetailPage,
+  RecipesPage,
+  UserPage,
+} from './pages';
 
 function App() {
   return (
@@ -17,6 +23,7 @@ function App() {
           <Route path='/recipes' element={<RecipesPage />} />
           <Route path='/recipes/:recipeId' element={<DetailPage />} />
           <Route path='/about' element={<AboutPage />} />
+          <Route path='/user' element={<UserPage />} />
         </Routes>
         <footer>
           <div className='py-5'>
