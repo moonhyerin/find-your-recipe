@@ -8,6 +8,7 @@ import SearchSection from '../components/SearchSection';
 import Label from '../components/Label';
 
 import Clock from '../assets/clock.png';
+import ImageNotFound from '../assets/image-not-found.png';
 
 import { API_URL, API_HOST, API_KEY } from '../constant';
 import { CategoryType, RecipeType, ResultType } from '../types';
@@ -68,7 +69,11 @@ function RecipesPage() {
         className='p-3 my-2 sm:w-[49%] md:w-[32%] lg:w-[24%] xl:w-[19%] bg-white border-2 hover:border-[#ff512e] cursor-pointer'
         onClick={() => handleRecipeClick(recipe)}
       >
-        <img alt='' src={recipe.image} />
+        {recipe.image ? (
+          <img alt='' src={recipe.image} />
+        ) : (
+          <img alt='' src={ImageNotFound} />
+        )}
         <div className='my-2'>
           {recipe.dishTypes.length ? (
             recipe.dishTypes.map(
@@ -95,10 +100,10 @@ function RecipesPage() {
           )}
         </div>
         <div className='py-2 flex flex-col items-center w-[100%]'>
-          <p className='mb-2 text-base font-medium leading-tight text-neutral-800 dark:text-neutral-50 w-[100%]'>
+          <p className='mb-2 text-base font-inter font-medium leading-tight text-neutral-800 dark:text-neutral-50 w-[100%]'>
             {recipe.title}
           </p>
-          <span className='flex flex-row items-center text-sm md:text-base text-neutral-600 dark:text-neutral-200'>
+          <span className='font-inter flex flex-row items-center text-sm md:text-base text-neutral-600 dark:text-neutral-200'>
             <img alt='' src={Clock} className='w-3 h-3 mr-2' />
             {recipe.readyInMinutes} min
           </span>
