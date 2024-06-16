@@ -214,7 +214,7 @@ function LandingPage() {
               type='email'
               placeholder='your@email.com'
             />
-            <button className=' shadow-md text-sm border-2 border-[#ff512e] bg-[#ff512e] text-white p-2 rounded-r-md'>
+            <button className='shadow-md text-sm border-2 border-[#ff512e] bg-[#ff512e] text-white p-2 rounded-r-md'>
               Contact
             </button>
           </div>
