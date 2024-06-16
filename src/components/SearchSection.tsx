@@ -124,8 +124,8 @@ function SearchSection({ handleSearch }: PropsType) {
 
   const renderMoreOptions = () => {
     return (
-      <div className=' text-right'>
-        <div className=' text-base cursor-pointer' onClick={handleOpen}>
+      <div className='font-inter text-right'>
+        <div className='text-base cursor-pointer' onClick={handleOpen}>
           More options
           <ExpandMoreIcon sx={{ width: 15, height: 15 }} />
         </div>
@@ -167,7 +167,7 @@ function SearchSection({ handleSearch }: PropsType) {
         <input
           type='button'
           value='Search'
-          className='text-base bg-[#ff512e] rounded-lg px-5 text-white font-normal'
+          className='font-inter text-base bg-[#ff512e] rounded-lg px-5 text-white font-normal'
           onClick={handleClick}
         />
       </div>
